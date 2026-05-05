@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and subscription data",
+      "type": "object",
+      "properties": {
+        "plan": {
+          "type": "string",
+          "enum": ["free", "pro", "agency"],
+          "description": "The user's current subscription plan"
+        },
+        "stripeCustomerId": {
+          "type": "string",
+          "description": "Optional Stripe customer ID"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["plan", "createdAt", "updatedAt"]
+    },
+    "Generation": {
+      "title": "Generation",
+      "description": "A generated caption and hashtag set",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who created this"
+        },
+        "platform": {
+          "type": "string",
+          "description": "Target social media platform"
+        },
+        "tone": {
+          "type": "string",
+          "description": "The requested tone"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The original user input"
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "The alternative captions generated"
+        },
+        "hashtags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of generated hashtags"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["userId", "platform", "tone", "prompt", "variants", "hashtags", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User subscription and profile"
+    },
+    "/generations/{generationId}": {
+      "schema": { "$ref": "#/entities/Generation" },
+      "description": "Generated content history"
+    }
+  }
+}
