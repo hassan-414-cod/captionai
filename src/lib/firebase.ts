@@ -7,12 +7,21 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 export const auth = getAuth(app);
 
+let isLoggingIn = false;
+
 export const signInWithGoogle = async () => {
+  if (isLoggingIn) return;
+  isLoggingIn = true;
   const provider = new GoogleAuthProvider();
   try {
+    provider.setCustomParameters({ prompt: 'select_account' });
     await signInWithPopup(auth, provider);
-  } catch (error) {
-    console.error('Error signing in with Google', error);
+  } catch (error: any) {
+    if (error.code !== 'auth/popup-closed-by-user' && error.code !== 'auth/cancelled-popup-request') {
+      console.error('Error signing in with Google', error);
+    }
+  } finally {
+    isLoggingIn = false;
   }
 };
 
