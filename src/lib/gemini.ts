@@ -1,9 +1,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiClient: GoogleGenAI | null = null;
+function getAi() {
+  if (!aiClient) aiClient = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "dummy" });
+  return aiClient;
+}
 
 export async function describeImageContext(base64Data: string, mimeType: string): Promise<string> {
-  const response = await ai.models.generateContent({
+  const response = await getAi().models.generateContent({
     model: "gemini-3.1-pro-preview",
     contents: {
       parts: [
@@ -72,7 +76,7 @@ Generate exactly 3 variant captions:
 
 Return the result as a JSON object matching the requested schema.`;
 
-  const response = await ai.models.generateContent({
+  const response = await getAi().models.generateContent({
     model: "gemini-3.1-pro-preview",
     contents: instructions,
     config: {
