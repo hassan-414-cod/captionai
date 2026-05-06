@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef, useState, ReactNode } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
 
@@ -21,7 +22,7 @@ export function MouseGlow() {
     };
     
     // Only run on desktop with pointer tracking & normal motion preference
-    if (window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       window.addEventListener('mousemove', handleMouseMove);
     }
     
@@ -48,7 +49,7 @@ export function ParticleBackground() {
   const [particles, setParticles] = useState<any[]>([]);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     
     const newParticles = Array.from({ length: 60 }).map((_, i) => ({
       id: i,
@@ -97,7 +98,7 @@ export function ParticleBackground() {
 
 // Hover Scale
 export function HoverScale({ children, className }: { children: ReactNode; className?: string }) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
      return <div className={className}>{children}</div>;
   }
   

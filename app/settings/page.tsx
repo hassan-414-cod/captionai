@@ -1,7 +1,8 @@
-import { useAuth } from '../lib/auth';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
+"use client";
+import { useAuth } from '@/lib/auth';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { CreditCard, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 

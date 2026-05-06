@@ -1,19 +1,20 @@
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+"use client";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Sparkles, Zap, LayoutTemplate } from 'lucide-react';
-import { useAuth } from '../lib/auth';
-import { signInWithGoogle } from '../lib/firebase';
-import { useNavigate } from 'react-router';
+import { useAuth } from '@/lib/auth';
+import { signInWithGoogle } from '@/lib/firebase';
+import { useRouter } from "next/navigation";
 import { useEffect } from 'react';
-import { ParticleBackground, TextReveal, Parallax, RevealOnScroll, HoverScale } from '../components/animations';
+import { ParticleBackground, TextReveal, Parallax, RevealOnScroll, HoverScale } from '@/components/animations';
 
 export default function Landing() {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   useEffect(() => {
     if (user) {
-      navigate('/dashboard');
+      router.push('/dashboard');
     }
   }, [user, navigate]);
 

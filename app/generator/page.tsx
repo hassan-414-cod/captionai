@@ -1,24 +1,25 @@
+"use client";
 import { useState, useRef } from 'react';
-import { useAuth } from '../lib/auth';
-import { useNavigate } from 'react-router';
-import { Card, CardContent } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Textarea } from '../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Label } from '../components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Badge } from '../components/ui/badge';
+import { useAuth } from '@/lib/auth';
+import { useRouter } from "next/navigation";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { Loader2, ImagePlus, Copy, Save, RefreshCw, X, Sparkles } from 'lucide-react';
-import { describeImageContext, generateCaptions, GeneratedResult } from '../lib/gemini';
+import { describeImageContext, generateCaptions, GeneratedResult } from '@/lib/gemini';
 import { collection, doc, setDoc, serverTimestamp, getDocs, query, where, Timestamp } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '../lib/firebase';
+import { db, handleFirestoreError, OperationType } from '@/lib/firebase';
 import { differenceInCalendarDays } from 'date-fns';
-import { ImageHoverZoom } from '../components/animations';
+import { ImageHoverZoom } from '@/components/animations';
 
 export default function Generator() {
   const { user, profile } = useAuth();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [description, setDescription] = useState('');
   const [platform, setPlatform] = useState('Instagram');
   const [tone, setTone] = useState('Casual and Friendly');
@@ -274,7 +275,7 @@ export default function Generator() {
 
           {isFree && (
             <p className="text-xs text-center text-slate-500 mt-2">
-              Free plan limited to 5 generations/day. <span className="text-indigo-600 cursor-pointer hover:underline" onClick={() => navigate('/settings')}>Upgrade to unlock Image Upload and Brand Voice.</span>
+              Free plan limited to 5 generations/day. <span className="text-indigo-600 cursor-pointer hover:underline" onClick={() => router.push('/settings')}>Upgrade to unlock Image Upload and Brand Voice.</span>
             </p>
           )}
         </div>

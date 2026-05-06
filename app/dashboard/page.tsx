@@ -1,16 +1,17 @@
+"use client";
 import { useEffect, useState } from 'react';
-import { useAuth } from '../lib/auth';
-import { useNavigate } from 'react-router';
+import { useAuth } from '@/lib/auth';
+import { useRouter } from "next/navigation";
 import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
-import { db } from '../lib/firebase';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Button } from '../components/ui/button';
+import { db } from '@/lib/firebase';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { PenLine, Sparkles, Hash, Library as LibraryIcon } from 'lucide-react';
 import { differenceInCalendarDays } from 'date-fns';
 
 export default function Dashboard() {
   const { user, profile, loading } = useAuth();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [generationsToday, setGenerationsToday] = useState(0);
   const [totalGenerations, setTotalGenerations] = useState(0);
   const [agencyStats, setAgencyStats] = useState({ platform: '', tone: '' });
@@ -18,7 +19,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!loading && !user) {
-      navigate('/');
+      router.push('/');
     }
   }, [user, loading, navigate]);
 
@@ -83,7 +84,7 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-800">Welcome back, {user?.displayName || 'Creator'}</h1>
           <p className="text-sm text-slate-500 mt-1">Ready to create some thumb-stopping copy?</p>
         </div>
-        <button className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm shadow-sm hover:bg-indigo-700 active:scale-95 transition-all shrink-0 flex items-center" onClick={() => navigate('/generator')}>
+        <button className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm shadow-sm hover:bg-indigo-700 active:scale-95 transition-all shrink-0 flex items-center" onClick={() => router.push('/generator')}>
           <PenLine className="w-4 h-4 mr-2" /> New Caption
         </button>
       </div>
@@ -98,7 +99,7 @@ export default function Dashboard() {
             {creditsRemaining}
           </div>
           {isFree && (
-            <p className="text-sm text-slate-500 mt-auto">Resets tonight. <button onClick={() => navigate('/settings')} className="text-indigo-600 font-bold hover:underline">Upgrade</button> for unlimited.</p>
+            <p className="text-sm text-slate-500 mt-auto">Resets tonight. <button onClick={() => router.push('/settings')} className="text-indigo-600 font-bold hover:underline">Upgrade</button> for unlimited.</p>
           )}
           {!isFree && (
             <p className="text-sm text-slate-500 mt-auto">You are on the {profile?.plan} plan.</p>
